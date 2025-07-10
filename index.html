@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link href="https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" rel="stylesheet">
+  <link href="./main.css" rel="stylesheet">
+  <title>FCCT&#7477;&#8314; Web Demo</title>
+</head>
+
+<body>
+  <div id="app">
+    <nav id="navigation-bar">
+      <div class="brand">
+        <div class="name"></div>
+        <div class="suffix">Web Demo</div>
+      </div>
+    </nav>
+    <div id="input">
+      <header class="toolbar">
+        <label for="example">Examples:</label>
+        <select class="select" id="example"></select>
+        <div class="compile-time-report"></div>
+        <button class="button" id="parse" style="margin-left: auto;">Type Check</button>
+      </header>
+      <textarea id="editor" spellcheck="false" autocapitalize="off" wrap="off"></textarea>
+    </div>
+    <div id="output" class="tabs">
+      <input type="radio" id="radio-typer" name="tabgroup" checked>
+      <div class="hint">Superscripts corresponds to marks, resolved weak types
+        corresponds to the set of different possible types for the term,
+        while C-Err indicates the constraint solving is stuck.</div>
+      <div class="tab-content" id="tab-parser">
+        <h3>Diagnostics</h3>
+        <div class="diagnostics">
+          <pre><code class="output"></code></pre>
+          <div class="text"><em>Click the "Type Check" button.</em></div>
+        </div>
+        <hr>
+        <header class="tree-display">
+          <h3>Parsed Trees</h3>
+          <div class="hint">Tips: You can click to open or close the nodes.</div>
+        </header>
+        <div class="trees"><em>Click the "Type Check" button.</em></div>
+        <hr>
+        <header class="traces">
+          <h3>Debug Traces</h3>
+          <div>
+            <input type="checkbox" id="show-traces">
+            <label for="show-traces">Record and show traces</label>
+          </div>
+        </header>
+        <pre><code class="traces"></code></pre>
+      </div>
+      <div class="tab-content" id="tab-elaborator">
+        <h3>Diagnostics</h3>
+        <div class="diagnostics">
+          <pre><code class="output"></code></pre>
+          <div class="text"><em>Click the "Type Check" button.</em></div>
+        </div>
+        <hr>
+        <header class="tree-display">
+          <h3>Elaborated Tree</h3>
+          <div class="hint">Tips: You can click to open or close the nodes.</div>
+        </header>
+        <div class="tree"><em>Click the "Type Check" button.</em></div>
+        <hr>
+        <header class="traces">
+          <h3>Debug Traces</h3>
+          <div>
+            <input type="checkbox" id="show-traces">
+            <label for="show-traces">Record and show traces</label>
+          </div>
+        </header>
+        <pre><code class="traces"></code></pre>
+      </div>
+      <div class="tab-content" id="tab-resolver">
+        <h3>Diagnostics</h3>
+        <div class="diagnostics">
+          <pre><code class="output"></code></pre>
+          <div class="text"><em>Click the "Type Check" button.</em></div>
+        </div>
+        <hr>
+        <header class="tree-display">
+          <h3>Elaborated Tree with Resolved Symbols</h3>
+          <div class="hint">Tips: You can click to open or close the nodes.</div>
+        </header>
+        <div class="tree"><em>Click the "Type Check" button.</em></div>
+        <hr>
+        <header class="traces">
+          <h3>Debug Traces</h3>
+          <div>
+            <input type="checkbox" id="show-traces">
+            <label for="show-traces">Record and show traces</label>
+          </div>
+        </header>
+        <pre><code class="traces"></code></pre>
+      </div>
+      <div class="tab-content" id="tab-typer">
+        <h3>Diagnostics</h3>
+        <div class="diagnostics">
+          <pre><code class="output"></code></pre>
+          <div class="text"><em>Click the "Type Check" button.</em></div>
+        </div>
+        <hr>
+        <!-- <header class="tree-display">
+          <h3>Typer Output</h3>
+          <div class="hint">Tips: You can click to open or close the nodes.</div>
+        </header>
+        <div class="tree"><em>Click the "Type Check" button.</em></div>
+        <hr> -->
+        <header class="traces">
+          <h3>Typer Output</h3>
+          <!-- <div>
+            <input type="checkbox" id="show-traces">
+            <label for="show-traces">Record and show traces</label>
+          </div> -->
+        </header>
+        <div class="results"></div>
+      </div>
+      <div class="tab-content" id="tab-code-generation">
+        <h3>JavaScript Code</h3>
+        <pre><code class="js"><em>Click the "Type Check" button.</em></code></pre>
+        <hr>
+        <h3>Diagnostics</h3>
+        <div class="diagnostics">
+          <pre><code class="output"></code></pre>
+          <div class="text"><em>Click the "Type Check" button.</em></div>
+        </div>
+        <hr>
+        <header class="traces">
+          <h3>Debug Traces</h3>
+          <div>
+            <input type="checkbox" id="show-traces">
+            <label for="show-traces">Record and show traces</label>
+          </div>
+        </header>
+        <pre><code class="traces"></code></pre>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="./main.mjs"></script>
+  <script type="module">
+    import katex from 'https://cdn.jsdelivr.net/npm/katex@0.16.22/+esm';
+    import renderMathInElement from "https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.mjs";
+    katex.render("FCCT^{\\mathcal{I}+}", document.querySelector(".brand .name"), {
+      throwOnError: false
+    });
+    document.querySelector("#parse").addEventListener("click", function() {
+      for (let x of document.querySelectorAll(".latexty")) {
+        renderMathInElement(x, {delimiters: [{left: "$$", right: "$$", display: false}]});
+      }
+    })
+  </script>
+</body>
+
+</html>
